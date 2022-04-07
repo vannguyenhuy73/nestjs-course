@@ -59,15 +59,15 @@ $ npm run test:cov
 ```
 ##Flow:
 1. Tạo Module:
-nest generate module {module-name}
+- nest generate module {module-name}
 
 2. Tạo controller
-nest generate controller {controller-name}
-xử lý request và response
+- nest generate controller {controller-name}
+- Xử lý request và response
 
 3. Tạo service
-nest generate service {service-name}
-xử lý business logic
+- nest generate service {service-name}
+- Xử lý business logic
 
 4. dto: 
 - 2 cấu trúc dành cho create và update
