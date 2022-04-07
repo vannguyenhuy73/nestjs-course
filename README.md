@@ -57,6 +57,33 @@ $ npm run test:e2e
 # test coverage
 $ npm run test:cov
 ```
+##Flow:
+1. Tạo Module:
+nest generate module {module-name}
+
+2. Tạo controller
+nest generate controller {controller-name}
+xử lý request và response
+
+3. Tạo service
+nest generate service {service-name}
+xử lý business logic
+
+4. dto: 
+- 2 cấu trúc dành cho create và update
+
+5. entity:
+- model course
+
+6. Data
+- Mock data: courses.mock.ts
+
+7. Swagger
+- Cài swagger demo xử lý CRUD
+
+8. Middleware
+- Check role bằng header: nếu có header(username) = admin thì next nếu k ==> 404
+- add middleware roleswagger để tạo luôn header(username) = admin.
 
 ## Support
 

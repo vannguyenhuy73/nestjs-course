@@ -1,10 +1,9 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, NotFoundException, Param, Post, Put, Query } from '@nestjs/common';
 import { ApiCreatedResponse, ApiHeader, ApiOkResponse, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CoursesService } from './courses.service';
 import { CreateCourseDto } from './dto/create-course-dto';
 import { UpdateCourseDto } from './dto/update-course-dto';
 import { Course } from './entities/course.entity';
-
 
 @Controller('courses')
 export class CoursesController {
@@ -21,14 +20,23 @@ export class CoursesController {
     @ApiOkResponse({type:Course, isArray:true})
     @Get('search')
     getCourseBySearch(@Query('q') q:string):Course[] {
-        return this.courseService.find(q);
+        let courses:Course[] =  this.courseService.find(q);
+        
+        if(!courses.length){
+            throw new NotFoundException({statusCode:404, message:"Không tìm thấy dữ liệu"});
+        }
+        return courses;
     }
 
     @ApiTags('courses/findById')
     @ApiOkResponse({type:Course, description:'The User'})
     @Get(':id')
     getCourseById(@Param('id') id:string):Course { //Lấy param id từ url
-        return this.courseService.findById(Number(id));
+        let course:Course =  this.courseService.findById(Number(id));
+        if(!Object.keys(course).length){
+            throw new NotFoundException({statusCode: 404, message:'không tìm thấy khóa học'})
+        }
+        return course;
     }
 
     @ApiTags('courses/create')
@@ -49,6 +57,7 @@ export class CoursesController {
        return this.courseService.updateCourse(body, Number(id));
     }
 
+    @ApiTags('course/delete')
     @Delete('delete/:id')
     deleteCourse(@Param('id') id:string):Course[]{
         return this.courseService.deleteCourse(Number(id));
